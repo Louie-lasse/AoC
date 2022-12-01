@@ -1,5 +1,6 @@
 import Data.List
 
+main :: IO Integer
 main = do
     text <- lines <$> readFile "text.txt"
     let cals = map (sum .map read) $ split text
