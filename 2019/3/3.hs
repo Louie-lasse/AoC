@@ -1,3 +1,4 @@
+import Data.List (sort)
 data Instr = U Int | D Int | L Int | R Int
     deriving Eq
 
@@ -7,8 +8,7 @@ main = do
     let rWire = walkFromStart red
     let bWire = walkFromStart blue
     let intersections = intersect rWire $ tail bWire
-    let nums = map (uncurry (+)) intersections
-    return $ minimum nums
+    return $ minimum $ map (uncurry (+) . both abs) intersections
 
 parse :: String -> [Instr]
 parse = map parse' . split
@@ -18,6 +18,9 @@ parse = map parse' . split
         parse' ('D':res) = D $ read res
         parse' ('R':res) = R $ read res
         parse' ('L':res) = L $ read res
+
+both :: (t -> b) -> (t, t) -> (b, b)
+both f (a,b) = (f a, f b)
 
 split :: String -> [String]
 split s | (r,',':r2) <- break (==',') s = r : split r2
