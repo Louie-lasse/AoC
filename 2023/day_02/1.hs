@@ -22,13 +22,12 @@ data Round = Round
     deriving Show
 
 main :: IO ()
-main = readFile "input.txt" >>= print . sum . map gameNr . filter legal . map (eval . parseGame) . lines
-
-tokenize :: String -> [String]
-tokenize = concatMap splitTokens . words where
-    splitTokens s | ":" `isContainedIn` s =       [take (length s - 1) s]
-                  | ";" `isContainedIn` s =       [take (length s - 1) s]
-                  | otherwise             =       [s]
+main = readFile "input.txt" >>= print 
+    . sum 
+    . map gameNr 
+    . filter legal 
+    . map (eval . parseGame) 
+    . lines
 
 splitWhen :: (a -> Bool) -> [a] -> [[a]]
 splitWhen f as = map reverse $ splitWhen' f as [] where
