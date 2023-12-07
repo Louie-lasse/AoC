@@ -22,7 +22,10 @@ data Round = Round
     deriving Show
 
 main :: IO ()
-main = readFile "input.txt" >>= print . sum . map (valueOf . eval . parseGame) . lines
+main = readFile "input.txt" >>= print 
+    . sum 
+    . map (valueOf . eval . parseGame) 
+    . lines
 
 splitWhen :: (a -> Bool) -> [a] -> [[a]]
 splitWhen f as = map reverse $ splitWhen' f as [] where
