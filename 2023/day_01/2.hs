@@ -1,7 +1,5 @@
 import Data.Functor ((<&>))
-import Text.Read (readMaybe)
 import Data.Char (isDigit)
-import GHC.Data.Maybe (isJust, fromJust)
 
 main :: IO ()
 main = readFile "input.txt" >>= print . sum . map readFullInt . lines
