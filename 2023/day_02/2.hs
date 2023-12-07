@@ -24,12 +24,6 @@ data Round = Round
 main :: IO ()
 main = readFile "input.txt" >>= print . sum . map (valueOf . eval . parseGame) . lines
 
-tokenize :: String -> [String]
-tokenize = concatMap splitTokens . words where
-    splitTokens s | ":" `isContainedIn` s =       [take (length s - 1) s]
-                  | ";" `isContainedIn` s =       [take (length s - 1) s]
-                  | otherwise             =       [s]
-
 splitWhen :: (a -> Bool) -> [a] -> [[a]]
 splitWhen f as = map reverse $ splitWhen' f as [] where
     splitWhen' f (a:as) cum | f a = cum : splitWhen' f as []
