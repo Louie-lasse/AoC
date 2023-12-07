@@ -43,6 +43,7 @@ parseGame line | (('G':'a':'m':'e':gNr):rounds) <- splitWhen (\c -> c==';' || c=
 strip :: String -> String
 strip = filter (not . (==) ' ')
 
+newRound :: Round
 newRound = Round 0 0 0
 
 parseRound :: String -> Round
