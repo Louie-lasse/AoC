@@ -62,23 +62,15 @@ addToMap res m = error $ show res
 parseNums :: String -> [Int]
 parseNums = map read . splitWhen (==' ')
 
+main :: IO ()
 main = readFile "input.txt" >>= print . lowest . parse . lines
 
 lowest :: Almanac -> Int
 lowest a = minimum $ map (seedLocation a) $ seeds a
 
-maximumOn :: Ord t => (a -> t) -> [a] -> a
-maximumOn f [] = error "maximumOn: empty list"
-maximumOn f (x:xs) = g x (f x) xs
-    where
-        g v mv [] = v
-        g v mv (x:xs) | mx > mv = g x mx xs
-                      | otherwise = g v mv xs
-            where mx = f x
-
 get :: (Almanac -> SeedLookup) -> Almanac -> Int -> Int
 get f a i | (a:as) <- filter ((<=i) . from) (f a)
-          , best <- maximumOn from (a:as) 
+          , best <- head $ L.sortOn ((0-) . from) (a:as) 
           , from best + range best >= i
           = to best + i - from best
           | otherwise = i
